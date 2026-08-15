@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;500;600;700;800&display=swap');
+body {
+font-family: 'Noto Sans Tamil', sans-serif;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+/* =====================================================
+   MOBILE PERFORMANCE
+   Keep the desktop visual effects, but let phones use
+   native scrolling and cheaper compositing.
+===================================================== */
+
+.travel-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
+}
+
+@media (max-width: 767px) {
+  /* Glass blur is one of the more expensive effects on mobile GPUs. */
+  [class*="backdrop-blur"] {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  /* Avoid browser smooth-scroll fighting with touch scrolling. */
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Keep touch scrolling responsive. */
+  body {
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-x: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+}
