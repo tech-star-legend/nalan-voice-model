@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.nalancateringtrich.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.nalancateringtrich.com/en/" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.nalancateringtrich.com/ta/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nalancateringtrich.com/" />
+  </url>
+  <url><loc>https://www.nalancateringtrich.com/en/</loc></url>
+  <url><loc>https://www.nalancateringtrich.com/ta/</loc></url>
+</urlset>
