@@ -22,7 +22,8 @@ function link(rel, href, extra = {}) {
 function SEO() {
   useEffect(() => {
     const siteUrl = "https://www.nalancateringtrich.com";
-    const language = localStorage.getItem("nalan-language") === "en" ? "en" : "ta";
+    const language = /^\/en\/?$/.test(window.location.pathname) || localStorage.getItem("nalan-language") === "en" ? "en" : "ta";
+    const currentUrl = language === "en" ? `${siteUrl}/en/` : `${siteUrl}/ta/`;
     const title = language === "en"
       ? "Nalan Catering Trichy | Wedding & Event Catering Services"
       : "நளன் கேட்டரிங் திருச்சி | திருமணம் & விழா கேட்டரிங் சேவைகள்";
@@ -39,7 +40,7 @@ function SEO() {
     upsertProperty("og:type", "website");
     upsertProperty("og:title", title);
     upsertProperty("og:description", description);
-    upsertProperty("og:url", siteUrl);
+    upsertProperty("og:url", currentUrl);
     upsertProperty("og:site_name", "Nalan Catering");
     upsertProperty("og:locale", language === "en" ? "en_IN" : "ta_IN");
     upsertProperty("og:image", `${siteUrl}/favicon.svg`);
@@ -47,10 +48,10 @@ function SEO() {
     upsertMeta("twitter:title", title);
     upsertMeta("twitter:description", description);
 
-    link("canonical", siteUrl);
-    link("alternate", `${siteUrl}/?lang=en`, { hreflang: "en-IN" });
-    link("alternate", `${siteUrl}/?lang=ta`, { hreflang: "ta-IN" });
-    link("alternate", siteUrl, { hreflang: "x-default" });
+    link("canonical", currentUrl);
+    link("alternate", `${siteUrl}/en/`, { hreflang: "en-IN" });
+    link("alternate", `${siteUrl}/ta/`, { hreflang: "ta-IN" });
+    link("alternate", `${siteUrl}/`, { hreflang: "x-default" });
 
     const schemaId = "nalan-catering-structured-data";
     let schema = document.getElementById(schemaId);
@@ -66,14 +67,7 @@ function SEO() {
           telephone: "+91 89250 59589",
           email: "nalancateringtrichy@gmail.com",
           description,
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: "13, Viyasaraja nagar, Mangamma nagar, Amma Mandapam road",
-            addressLocality: "Srirangam, Trichy",
-            postalCode: "620006",
-            addressRegion: "Tamil Nadu",
-            addressCountry: "IN"
-          },
+          address: { "@type": "PostalAddress", streetAddress: "13, Viyasaraja nagar, Mangamma nagar, Amma Mandapam road", addressLocality: "Srirangam, Trichy", postalCode: "620006", addressRegion: "Tamil Nadu", addressCountry: "IN" },
           areaServed: ["Srirangam", "Trichy", "Tamil Nadu"],
           servesCuisine: ["Tamil Cuisine", "South Indian Cuisine"],
           slogan: "Quality in Every Bite, Forever Right."
