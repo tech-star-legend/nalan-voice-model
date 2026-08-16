@@ -1,9 +1,32 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import useIsMobile from "../useIsMobile";
 import heroImage from "../../assets/images/IMG-20260803-WA0010.jpg";
+import { useTranslations } from "../../i18n/useLanguage";
+
+const content = {
+  ta: {
+    headingLine1: "உங்கள் விழா",
+    headingLine2: "எங்கள் பொறுப்பு",
+    description:
+      "உங்கள் திருமணம், பிறந்தநாள் மற்றும் அனைத்து சிறப்பு நிகழ்வுகளுக்கும் சுவையான உணவும், சிறந்த சேவையும் வழங்குகிறோம்.",
+    bookNow: "📞 பதிவு செய்யுங்கள்",
+    viewMenu: "உணவு பட்டியல்",
+    scroll: "Scroll to explore",
+  },
+  en: {
+    headingLine1: "Your Celebration,",
+    headingLine2: "Our Responsibility",
+    description:
+      "We deliver delicious food and outstanding service for your wedding, birthday, and every special occasion.",
+    bookNow: "📞 Book Now",
+    viewMenu: "View Menu",
+    scroll: "Scroll to explore",
+  },
+};
 
 function Hero() {
   const isMobile = useIsMobile();
+  const t = useTranslations(content);
   const { scrollY } = useScroll();
 
   const imageY = useTransform(scrollY, [0, 600], [0, 120]);
@@ -64,6 +87,9 @@ function Hero() {
         <img
           src={heroImage}
           alt="Nalan Catering food and catering service"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
           className="
             w-full
             h-full
@@ -221,7 +247,7 @@ function Hero() {
             drop-shadow-2xl
           "
         >
-          உங்கள் விழா
+          {t.headingLine1}
           <br />
 
           <span
@@ -230,7 +256,7 @@ function Hero() {
               drop-shadow-[0_0_20px_rgba(134,239,172,0.25)]
             "
           >
-            எங்கள் பொறுப்பு
+            {t.headingLine2}
           </span>
         </motion.h1>
 
@@ -260,9 +286,7 @@ function Hero() {
             text-green-50/85
           "
         >
-          உங்கள் திருமணம், பிறந்தநாள் மற்றும் அனைத்து
-          சிறப்பு நிகழ்வுகளுக்கும் சுவையான உணவும்,
-          சிறந்த சேவையும் வழங்குகிறோம்.
+          {t.description}
         </motion.p>
 
         {/* Buttons */}
@@ -315,7 +339,7 @@ function Hero() {
               duration-200
             "
           >
-            📞 பதிவு செய்யுங்கள்
+            {t.bookNow}
           </motion.button>
 
           <motion.button
@@ -359,7 +383,7 @@ function Hero() {
               duration-200
             "
           >
-            உணவு பட்டியல்
+            {t.viewMenu}
           </motion.button>
         </motion.div>
       </motion.div>
@@ -413,7 +437,7 @@ function Hero() {
           text-xs
         "
       >
-        <span>Scroll to explore</span>
+        <span>{t.scroll}</span>
 
         <motion.div
           animate={{

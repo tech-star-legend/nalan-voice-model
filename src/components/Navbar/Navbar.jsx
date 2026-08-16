@@ -10,10 +10,46 @@ import {
 } from "lucide-react";
 
 import nalanLogo from "../../assets/images/nalan-logo.jpg";
+import LanguageToggle from "../LanguageToggle/LanguageToggle";
+import { useTranslations } from "../../i18n/useLanguage";
+
+const content = {
+  ta: {
+    brand: "நளன் கேட்டரிங்",
+    tagline: "Quality in Every Bite, Forever Right.",
+    book: "📞 பதிவு செய்யுங்கள்",
+    links: [
+      { name: "முகப்பு", id: "home" },
+      { name: "எங்களை பற்றி", id: "about" },
+      { name: "சேவைகள்", id: "services" },
+      { name: "உணவு பட்டியல்", id: "menu" },
+      { name: "தருணங்கள்", id: "gallery" },
+      { name: "கருத்துகள்", id: "testimonials" },
+      { name: "முன்பதிவு", id: "booking" },
+      { name: "தொடர்பு", id: "contact" },
+    ],
+  },
+  en: {
+    brand: "Nalan Catering",
+    tagline: "Quality in Every Bite, Forever Right.",
+    book: "📞 Book Now",
+    links: [
+      { name: "Home", id: "home" },
+      { name: "About", id: "about" },
+      { name: "Services", id: "services" },
+      { name: "Menu", id: "menu" },
+      { name: "Gallery", id: "gallery" },
+      { name: "Testimonials", id: "testimonials" },
+      { name: "Booking", id: "booking" },
+      { name: "Contact", id: "contact" },
+    ],
+  },
+};
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const t = useTranslations(content);
 
   /* =====================================================
       SCROLL TO SECTION
@@ -134,44 +170,7 @@ function Navbar() {
     };
   }, []);
 
-  /* =====================================================
-      NAVIGATION LINKS
-  ====================================================== */
-
-  const links = [
-    {
-      name: "முகப்பு",
-      id: "home",
-    },
-    {
-      name: "எங்களை பற்றி",
-      id: "about",
-    },
-    {
-      name: "சேவைகள்",
-      id: "services",
-    },
-    {
-      name: "உணவு பட்டியல்",
-      id: "menu",
-    },
-    {
-      name: "தருணங்கள்",
-      id: "gallery",
-    },
-    {
-      name: "கருத்துகள் ",
-      id: "testimonials",
-    },
-    {
-      name: "முன்பதிவு",
-      id: "booking",
-    },
-    {
-      name: "தொடர்பு",
-      id: "contact",
-    },
-  ];
+  const links = t.links;
 
   return (
     <header
@@ -347,7 +346,7 @@ function Navbar() {
             <img
               decoding="async"
               src={nalanLogo}
-              alt="நளன் கேட்டரிங்"
+              alt={t.brand}
               className="
                 w-10
                 h-10
@@ -381,7 +380,7 @@ function Navbar() {
                   whitespace-nowrap
                 "
               >
-                நளன் கேட்டரிங்
+                {t.brand}
               </h1>
 
               <p
@@ -396,7 +395,7 @@ function Navbar() {
                   whitespace-nowrap
                 "
               >
-                உணவில் தரம் • என்றும் நிரந்தரம்
+                {t.tagline}
               </p>
 
             </div>
@@ -585,7 +584,7 @@ function Navbar() {
           >
 
             <span>
-              📞 பதிவு செய்யுங்கள்
+              {t.book}
             </span>
 
             <ArrowRight
@@ -598,6 +597,12 @@ function Navbar() {
             />
 
           </motion.button>
+
+          {/* =================================================
+              LANGUAGE TOGGLE (E / த)
+          ================================================== */}
+
+          <LanguageToggle />
 
           {/* =================================================
               MOBILE MENU BUTTON
@@ -863,7 +868,7 @@ function Navbar() {
                   >
 
                     <span>
-                      📞 பதிவு செய்யுங்கள்
+                      {t.book}
                     </span>
 
                     <ArrowRight

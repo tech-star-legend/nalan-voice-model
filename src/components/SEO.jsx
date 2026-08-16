@@ -1,4 +1,26 @@
 import { useEffect } from "react";
+import { useLanguage } from "../i18n/useLanguage";
+
+const SITE_URL = "https://www.nalancateringtrich.com";
+
+const COPY = {
+  ta: {
+    title: "நளன் கேட்டரிங் திருச்சி | திருமணம் மற்றும் விழா கேட்டரிங் சேவைகள்",
+    description:
+      "நளன் கேட்டரிங் திருச்சி, தமிழ்நாட்டில் திருமணம், குடும்ப விழாக்கள், பிறந்தநாள் மற்றும் நிறுவன நிகழ்வுகளுக்கு தரமான தென்னிந்திய கேட்டரிங் சேவையை வழங்குகிறது.",
+    keywords:
+      "நளன் கேட்டரிங், திருச்சி கேட்டரிங், திருமண கேட்டரிங் திருச்சி, தென்னிந்திய கேட்டரிங், Nalan Catering, catering in Trichy",
+    locale: "ta_IN",
+  },
+  en: {
+    title: "Nalan Catering Trichy | Wedding & Event Catering Services",
+    description:
+      "Nalan Catering in Trichy, Tamil Nadu provides quality South Indian catering for weddings, family functions, birthdays, corporate events and special occasions.",
+    keywords:
+      "Nalan Catering, catering in Trichy, Trichy catering services, wedding catering Trichy, marriage catering Trichy, South Indian catering Trichy, event catering Tamil Nadu",
+    locale: "en_IN",
+  },
+};
 
 function setMeta(name, content) {
   if (!content) return;
@@ -28,14 +50,28 @@ function setProperty(property, content) {
   element.setAttribute("content", content);
 }
 
+function setLink(rel, href, extraAttrs = {}) {
+  let element = document.head.querySelector(`link[rel="${rel}"]`);
+
+  if (!element) {
+    element = document.createElement("link");
+    element.setAttribute("rel", rel);
+    document.head.appendChild(element);
+  }
+
+  element.setAttribute("href", href);
+
+  Object.entries(extraAttrs).forEach(([key, value]) => {
+    element.setAttribute(key, value);
+  });
+}
+
 function SEO() {
+  const { language } = useLanguage();
+
   useEffect(() => {
-    const siteUrl = window.location.origin;
-    const title = "Nalan Catering Trichy | Wedding & Event Catering Services";
-    const description =
-      "Nalan Catering in Trichy, Tamil Nadu provides quality South Indian catering for weddings, family functions, birthdays, corporate events and special occasions.";
-    const keywords =
-      "Nalan Catering, catering in Trichy, Trichy catering services, wedding catering Trichy, marriage catering Trichy, South Indian catering Trichy, event catering Tamil Nadu";
+    const copy = COPY[language] || COPY.ta;
+    const { title, description, keywords, locale } = copy;
 
     document.title = title;
 
@@ -48,23 +84,17 @@ function SEO() {
     setProperty("og:type", "website");
     setProperty("og:title", title);
     setProperty("og:description", description);
-    setProperty("og:url", siteUrl);
+    setProperty("og:url", SITE_URL);
     setProperty("og:site_name", "Nalan Catering");
-    setProperty("og:locale", "en_IN");
+    setProperty("og:locale", locale);
 
     setProperty("twitter:card", "summary");
     setProperty("twitter:title", title);
     setProperty("twitter:description", description);
 
-    let canonical = document.head.querySelector('link[rel="canonical"]');
-
-    if (!canonical) {
-      canonical = document.createElement("link");
-      canonical.setAttribute("rel", "canonical");
-      document.head.appendChild(canonical);
-    }
-
-    canonical.setAttribute("href", siteUrl);
+    // Single canonical URL: language is a client-side toggle
+    // on the same page, not a separate route.
+    setLink("canonical", SITE_URL);
 
     const schemaId = "nalan-catering-local-business-schema";
     let schema = document.getElementById(schemaId);
@@ -81,29 +111,24 @@ function SEO() {
       "@type": "Caterer",
       name: "Nalan Catering",
       description,
-      url: siteUrl,
+      url: SITE_URL,
       telephone: "+91 89250 59589",
       email: "nalancateringtrichy@gmail.com",
       address: {
         "@type": "PostalAddress",
+        streetAddress:
+          "13, Viyasaraja Nagar, Mangamma Nagar, Amma Mandapam Road, Srirangam",
         addressLocality: "Trichy",
         addressRegion: "Tamil Nadu",
+        postalCode: "620006",
         addressCountry: "IN",
       },
-      areaServed: [
-        "Trichy",
-        "Tamil Nadu",
-      ],
-      servesCuisine: [
-        "South Indian",
-        "Tamil Cuisine",
-      ],
+      areaServed: ["Trichy", "Srirangam", "Tamil Nadu"],
+      servesCuisine: ["South Indian", "Tamil Cuisine"],
+      priceRange: "₹₹",
+      availableLanguage: ["Tamil", "English"],
     });
-
-    return () => {
-      // Keep the page metadata in place during normal SPA navigation.
-    };
-  }, []);
+  }, [language]);
 
   return null;
 }
